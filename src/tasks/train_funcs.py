@@ -10,9 +10,13 @@ import math
 import torch
 import torch.nn as nn
 from ..misc import save_as_pickle, load_pickle
-from seqeval.metrics import precision_score, recall_score, f1_score
+from seqeval.metrics import recall_score, f1_score#, precision_score
 import logging
 from tqdm import tqdm
+
+# alternate eval
+from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.metrics import precision_score#, recall_score
 
 logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', \
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
@@ -77,6 +81,10 @@ def evaluate_results(net, test_loader, pad_id, cuda):
     logger.info("Evaluating test samples...")
     acc = 0; out_labels = []; true_labels = []
     net.eval()
+
+    # alternate eval
+    multi = MultiLabelBinarizer()
+
     with torch.no_grad():
         for i, data in tqdm(enumerate(test_loader), total=len(test_loader)):
             x, e1_e2_start, labels, _,_,_ = data
@@ -96,10 +104,14 @@ def evaluate_results(net, test_loader, pad_id, cuda):
             out_labels.append([str(i) for i in o]); true_labels.append([str(i) for i in l])
             acc += accuracy
     
+    # alternate eval
+    true_new = multi.fit(true_labels).transform(true_labels)
+    out_new = multi.transform(out_labels)
+    
     accuracy = acc/(i + 1)
     results = {
         "accuracy": accuracy,
-        "precision": precision_score(true_labels, out_labels),
+        "precision": precision_score(true_new, out_new),
         "recall": recall_score(true_labels, out_labels),
         "f1": f1_score(true_labels, out_labels)
     }
