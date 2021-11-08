@@ -32,10 +32,10 @@ def process_text(text, mode='train'):
         blank = text[4*i + 3]
         
         # check entries
-        if mode == 'train':
-            assert int(re.match("^\d+", sent)[0]) == (i + 1)
-        else:
-            assert (int(re.match("^\d+", sent)[0]) - 8000) == (i + 1)
+        # if mode == 'train':
+        #     assert int(re.match("^\d+", sent)[0]) == (i + 1)
+        # else:
+        #     assert (int(re.match("^\d+", sent)[0]) - 8000) == (i + 1)
         assert re.match("^Comment", comment)
         assert len(blank) == 1
         
@@ -44,6 +44,7 @@ def process_text(text, mode='train'):
         sent = re.sub('</e1>', '[/E1]', sent)
         sent = re.sub('<e2>', '[E2]', sent)
         sent = re.sub('</e2>', '[/E2]', sent)
+        if len(sent) > 400: sent = sent[:400]
         sents.append(sent); relations.append(relation), comments.append(comment); blanks.append(blank)
     return sents, relations, comments, blanks
 
