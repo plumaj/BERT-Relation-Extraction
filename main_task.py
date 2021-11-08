@@ -21,9 +21,9 @@ logger = logging.getLogger('__file__')
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--task", type=str, default='semeval', help='semeval, fewrel')
-    parser.add_argument("--train_data", type=str, default='/experiments/biographie/data/train_wNone.txt', \
+    parser.add_argument("--train_data", type=str, default='/experiments/aplum/biographie/data/train_wNone.txt', \
                         help="training data .txt file path")
-    parser.add_argument("--test_data", type=str, default='/experiments/biographie/data/test_wNone.txt', \
+    parser.add_argument("--test_data", type=str, default='/experiments/aplum/biographie/data/test_wNone.txt', \
                         help="test data .txt file path")
     parser.add_argument("--use_pretrained_blanks", type=int, default=0, help="0: Don't use pre-trained blanks model, 1: use pre-trained blanks model")
     parser.add_argument("--num_classes", type=int, default=19, help='number of relation classes')
