@@ -111,7 +111,7 @@ def evaluate_results(net, test_loader, pad_id, cuda):
     accuracy = acc/(i + 1)
     results = {
         "accuracy": accuracy,
-        "precision": precision_score(true_new, out_new),
+        "precision": precision_score(true_new, out_new, average='samples'),
         "recall": recall_score(true_labels, out_labels),
         "f1": f1_score(true_labels, out_labels)
     }
