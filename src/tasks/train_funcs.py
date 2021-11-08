@@ -10,13 +10,13 @@ import math
 import torch
 import torch.nn as nn
 from ..misc import save_as_pickle, load_pickle
-from seqeval.metrics import recall_score, f1_score#, precision_score
+#from seqeval.metrics import f1_score, recall_score, precision_score
 import logging
 from tqdm import tqdm
 
 # alternate eval
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.metrics import precision_score#, recall_score
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', \
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
@@ -112,8 +112,8 @@ def evaluate_results(net, test_loader, pad_id, cuda):
     results = {
         "accuracy": accuracy,
         "precision": precision_score(true_new, out_new, average='samples'),
-        "recall": recall_score(true_labels, out_labels),
-        "f1": f1_score(true_labels, out_labels)
+        "recall": recall_score(true_new, out_new, average='samples'),
+        "f1": f1_score(true_new, out_new, average='samples')
     }
     logger.info("***** Eval results *****")
     for key in sorted(results.keys()):
