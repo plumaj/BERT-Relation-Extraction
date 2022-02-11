@@ -36,6 +36,8 @@ def process_text(text, mode='train'):
         #     assert int(re.match("^\d+", sent)[0]) == (i + 1)
         # else:
         #     assert (int(re.match("^\d+", sent)[0]) - 8000) == (i + 1)
+        #print(comment)
+        #print(i)
         assert re.match("^Comment", comment)
         assert len(blank) == 1
         

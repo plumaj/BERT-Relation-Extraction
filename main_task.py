@@ -21,10 +21,8 @@ logger = logging.getLogger('__file__')
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--task", type=str, default='semeval', help='semeval, fewrel')
-    parser.add_argument("--train_data", type=str, default='/experiments/aplum/biographie/data/train_wNone.txt', \
-                        help="training data .txt file path")
-    parser.add_argument("--test_data", type=str, default='/experiments/aplum/biographie/data/test_wNone.txt', \
-                        help="test data .txt file path")
+    parser.add_argument("--train_data", type=str, default='data/train.txt', help="training data .txt file path")
+    parser.add_argument("--test_data", type=str, default='data/test.txt', help="test data .txt file path")
     parser.add_argument("--use_pretrained_blanks", type=int, default=0, help="0: Don't use pre-trained blanks model, 1: use pre-trained blanks model")
     parser.add_argument("--num_classes", type=int, default=19, help='number of relation classes')
     parser.add_argument("--batch_size", type=int, default=32, help="Training batch size")
@@ -42,7 +40,8 @@ if __name__ == "__main__":
                                                                                                 'albert-large-v2'\
                                                                                     For BioBERT: 'bert-base-uncased' (biobert_v1.1_pubmed)")
     parser.add_argument("--train", type=int, default=1, help="0: Don't train, 1: train")
-    parser.add_argument("--infer", type=int, default=1, help="0: Don't infer, 1: Infer")
+    parser.add_argument("--infer", type=int, default=0, help="0: Don't infer, 1: Infer")
+    parser.add_argument("--test", type=int, default=1, help="0: Don't test, 1:test")
     
     args = parser.parse_args()
     
