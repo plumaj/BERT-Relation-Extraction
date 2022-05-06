@@ -25,8 +25,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--task", type=str, default='semeval', help='semeval, fewrel')
     # EN
-    parser.add_argument("--train_data", type=str, default='../data/m2_master_train.txt', help="training data .txt file path")
-    parser.add_argument("--test_data", type=str, default='../data/gold.txt', help="test data .txt file path")
+    parser.add_argument("--train_data", type=str, default='../../data/m2_master_train.txt', help="training data .txt file path")
+    parser.add_argument("--test_data", type=str, default='../../data/gold.txt', help="test data .txt file path")
     # DE
     # parser.add_argument("--train_data", type=str, default='../data/de/m1de_master_train.txt', help="training data .txt file path")
     # parser.add_argument("--test_data", type=str, default='../data/de/m1de_gold.txt', help="test data .txt file path")
