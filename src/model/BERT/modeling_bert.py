@@ -626,10 +626,13 @@ class BertModel(BertPreTrainedModel):
             #self.lm_bias = nn.Parameter(torch.zeros(config.vocab_size))
         elif self.task == 'classification':
             self.n_classes_ = n_classes_
-            if self.model_size == 'bert-base-uncased':
-                self.classification_layer = nn.Linear(1536, n_classes_)
-            elif self.model_size == 'bert-large-uncased':
+            # if self.model_size == 'bert-base-uncased':
+            #     self.classification_layer = nn.Linear(1536, n_classes_)
+            #elif (if statement below)
+            if self.model_size == 'bert-large-uncased':
                 self.classification_layer = nn.Linear(2048, n_classes_)
+            else:
+                self.classification_layer = nn.Linear(1536, n_classes_)
             
     def get_input_embeddings(self):
         return self.embeddings.word_embeddings
