@@ -48,7 +48,7 @@ if __name__ == "__main__":
                                                                                                 'albert-large-v2'\
                                                                                     For BioBERT: 'bert-base-uncased' (biobert_v1.1_pubmed)")
     parser.add_argument("--train", type=int, default=1, help="0: Don't train, 1: train")
-    parser.add_argument("--infer", type=int, default=0, help="0: Don't infer, 1: Infer")
+    parser.add_argument("--infer", type=int, default=1, help="0: Don't infer, 1: Infer")
     parser.add_argument("--test", type=int, default=1, help="0: Don't test, 1:test")
     
     args = parser.parse_args()
@@ -57,17 +57,17 @@ if __name__ == "__main__":
         net = train_and_fit(args)
         
     if (args.infer == 1) and (args.task != 'fewrel'):
-        inferer = infer_from_trained(args, detect_entities=True)
+        inferer = infer_from_trained(args, detect_entities=False)
         test = "The surprise [E1]visit[/E1] caused a [E2]frenzy[/E2] on the already chaotic trading floor."
         inferer.infer_sentence(test, detect_entities=False)
-        test2 = "After eating the chicken, he developed a sore throat the next morning."
-        inferer.infer_sentence(test2, detect_entities=True)
+        # test2 = "After eating the chicken, he developed a sore throat the next morning."
+        # inferer.infer_sentence(test2, detect_entities=True)
         
-        while True:
-            sent = input("Type input sentence ('quit' or 'exit' to terminate):\n")
-            if sent.lower() in ['quit', 'exit']:
-                break
-            inferer.infer_sentence(sent, detect_entities=False)
+        # while True:
+        #     sent = input("Type input sentence ('quit' or 'exit' to terminate):\n")
+        #     if sent.lower() in ['quit', 'exit']:
+        #         break
+        #     inferer.infer_sentence(sent, detect_entities=False)
     
     if args.task == 'fewrel':
         fewrel = FewRel(args)

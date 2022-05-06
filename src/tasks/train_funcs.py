@@ -120,8 +120,8 @@ def evaluate_results(net, test_loader, pad_id, cuda):
     logger.info("**********************LEN PREDICTIONS********************")
     logger.info(len(true_labels))
     logger.info(len(true_new))
-    print(true_new)
-    print(out_new)
+    #print(true_new)
+    #print(out_new)
     accuracy = acc/(i + 1)
     results = {
         "accuracy": accuracy,
