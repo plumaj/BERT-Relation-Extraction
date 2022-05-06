@@ -13,10 +13,11 @@ from ..misc import save_as_pickle, load_pickle
 #from seqeval.metrics import f1_score, recall_score, precision_score
 import logging
 from tqdm import tqdm
+import numpy as np
 
 # alternate eval
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import precision_score, recall_score, f1_score, classification_report
 
 logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', \
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
@@ -105,15 +106,29 @@ def evaluate_results(net, test_loader, pad_id, cuda):
             acc += accuracy
     
     # alternate eval
-    true_new = multi.fit(true_labels).transform(true_labels)
-    out_new = multi.transform(out_labels)
-    
+    #true_new = multi.fit(true_labels).transform(true_labels)
+    #out_new = multi.transform(out_labels)
+    true_new = []
+    for n in true_labels:
+        for val in n:
+            true_new.append(val)
+    out_new = []
+    for n2 in out_labels:
+        for val2 in n2:
+            out_new.append(val2)
+
+    logger.info("**********************LEN PREDICTIONS********************")
+    logger.info(len(true_labels))
+    logger.info(len(true_new))
+    print(true_new)
+    print(out_new)
     accuracy = acc/(i + 1)
     results = {
         "accuracy": accuracy,
-        "precision": precision_score(true_new, out_new, average='samples'),
-        "recall": recall_score(true_new, out_new, average='samples'),
-        "f1": f1_score(true_new, out_new, average='samples')
+        "precision": precision_score(true_new, out_new, average='weighted'),
+        "recall": recall_score(true_new, out_new, average='weighted'),
+        "f1": f1_score(true_new, out_new, average='weighted'),
+        "report": classification_report(true_new, out_new)
     }
     logger.info("***** Eval results *****")
     for key in sorted(results.keys()):

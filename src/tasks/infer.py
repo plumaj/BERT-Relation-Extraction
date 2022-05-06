@@ -206,6 +206,7 @@ class infer_from_trained(object):
                                         e1_e2_start=e1_e2_start)
             predicted = torch.softmax(classification_logits, dim=1).max(1)[1].item()
         print("Sentence: ", sentence)
+        print("\nLabels: ", self.rm.idx2rel, '\n')
         print("Predicted: ", self.rm.idx2rel[predicted].strip(), '\n')
         return predicted
     
